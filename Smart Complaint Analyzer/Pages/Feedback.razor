@@ -1,0 +1,36 @@
+﻿@page "/feedback"
+@inject ModelApiService ApiService
+
+<h3>Passenger Feedback</h3>
+
+<textarea @bind="feedbackText" rows="4" cols="60"></textarea>
+<br />
+<button @onclick="AnalyzeFeedback">Analyze</button>
+
+@if (loading) { <p>Analyzing...</p> }
+@if (!string.IsNullOrEmpty(resultText)) { <p>@resultText</p> }
+
+@code {
+    string feedbackText = "";
+    bool loading = false;
+    string resultText = "";
+
+    async Task AnalyzeFeedback()
+    {
+        loading = true;
+        resultText = "";
+        try
+        {
+            var resp = await ApiService.PredictAsync(feedbackText);
+            resultText = $"Label: {resp.Label} (confidence: {resp.Score:P1})";
+        }
+        catch (Exception ex)
+        {
+            resultText = "Error: " + ex.Message;
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+}

@@ -1,0 +1,26 @@
+﻿@page "/test"
+@inject HttpClient Http
+
+<h3>Backend Connection Test</h3>
+
+<p>@message</p>
+
+<button class="btn btn-primary" @onclick="CheckBackend">Check Connection</button>
+
+@code {
+    private string message = "Click the button to test connection...";
+
+    private async Task CheckBackend()
+    {
+        try
+        {
+            // Call your FastAPI /health endpoint
+            var response = await Http.GetStringAsync("http://127.0.0.1:8000/health");
+            message = $"Backend says: {response}";
+        }
+        catch (Exception ex)
+        {
+            message = $"❌ Failed to connect: {ex.Message}";
+        }
+    }
+}
