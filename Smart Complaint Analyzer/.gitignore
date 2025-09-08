@@ -1,4 +1,6 @@
 .vs/
 bin/
 obj/
-.vs/Smart Complaint Analyzer
+Smart Complaint Analyzer/.vs
+Smart Complaint Analyzer/.obj
+Smart Complaint Analyzer/.bin

@@ -10,13 +10,17 @@ public class PredictResponse
 
 public class ModelApiService
 {
-    private readonly HttpClient _client;
-    public ModelApiService(HttpClient client) => _client = client;
+    private readonly HttpClient _http;
+    public ModelApiService(HttpClient http)
+    { 
+        _http = http;
+        
+    }
 
-    public async Task<PredictResponse> PredictAsync(string text)
+    public async Task<PredictResponse> PredictAsync(string feedback)
     {
-        var payload = new { text = text };
-        var response = await _client.PostAsJsonAsync("predict", payload); // relative path OK (BaseAddress set)
+        
+        var response = await _http.PostAsJsonAsync("http://127.0.0.1:8000/predict", new { text = feedback }); 
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<PredictResponse>();
     }

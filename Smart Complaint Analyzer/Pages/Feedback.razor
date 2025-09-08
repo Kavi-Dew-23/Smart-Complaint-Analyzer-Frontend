@@ -1,14 +1,25 @@
-﻿@page "/feedback"
+﻿@page "/"
 @inject ModelApiService ApiService
+<link href="/css/Styles.css" rel="stylesheet" />
 
-<h3>Passenger Feedback</h3>
+<div class="analyzer-container">
+    <div class="analyzer-box">
+        <h2>✈️ Smart Complaint Analyzer</h2>
 
-<textarea @bind="feedbackText" rows="4" cols="60"></textarea>
-<br />
-<button @onclick="AnalyzeFeedback">Analyze</button>
+        <textarea @bind="feedbackText" rows="4" cols="60" placeholder="Enter passenger feedback here..."></textarea>
+        <br />
+        <button class="analyze-btn" @onclick="AnalyzeFeedback">Analyze</button>
 
-@if (loading) { <p>Analyzing...</p> }
-@if (!string.IsNullOrEmpty(resultText)) { <p>@resultText</p> }
+        @if (loading)
+        {
+            <p>Analyzing...</p>
+        }
+        @if (!string.IsNullOrEmpty(resultText))
+        {
+            <p class="result">@resultText</p>
+        }
+    </div>
+</div>
 
 @code {
     string feedbackText = "";
